@@ -1,0 +1,104 @@
+[2025-06-24 13:51:00]
+Array
+(
+)
+
+
+❌ Paiement échoué ou annulé par l'utilisateur.
+[2025-06-24 13:51:01]
+Array
+(
+)
+
+
+❌ Paiement échoué ou annulé par l'utilisateur.
+[2025-06-24 13:51:01]
+Array
+(
+)
+
+
+❌ Paiement échoué ou annulé par l'utilisateur.
+[2025-06-24 13:51:01]
+Array
+(
+)
+
+
+❌ Paiement échoué ou annulé par l'utilisateur.
+[2025-06-24 13:56:13]
+Array
+(
+)
+
+
+❌ Paiement échoué ou annulé par l'utilisateur.
+[2025-06-24 13:56:16]
+Array
+(
+)
+
+
+❌ Paiement échoué ou annulé par l'utilisateur.
+[2025-06-24 14:34:21]
+Array
+(
+)
+
+
+❌ Paiement échoué ou annulé par l'utilisateur.
+[2025-06-24 14:34:31]
+Array
+(
+)
+
+
+❌ Paiement échoué ou annulé par l'utilisateur.
+[2025-06-24 14:34:31]
+Array
+(
+)
+
+
+❌ Paiement échoué ou annulé par l'utilisateur.
+[2025-06-24 14:34:31]
+Array
+(
+)
+
+
+❌ Paiement échoué ou annulé par l'utilisateur.
+[2025-06-24 17:07:08]
+Array
+(
+)
+
+
+❌ Paiement échoué ou annulé par l'utilisateur.
+[2025-06-24 17:08:29]
+Array
+(
+)
+
+
+❌ Paiement échoué ou annulé par l'utilisateur.
+[2025-06-24 17:08:29]
+Array
+(
+)
+
+
+❌ Paiement échoué ou annulé par l'utilisateur.
+[2025-06-27 09:09:30]
+Array
+(
+)
+
+
+❌ Paiement échoué ou données incomplètes. Responsecode: 
+[2025-06-27 09:21:18]
+Array
+(
+)
+
+

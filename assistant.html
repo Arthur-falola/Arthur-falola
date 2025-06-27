@@ -1,0 +1,264 @@
+<!-- Assistant SkyBoost (Amélioré et stylisé comme un messager) --><style>
+  #assistant-button {
+    position: fixed;
+    bottom: 60px;
+    right: 20px;
+    background: #007BFF;
+    color: white;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    font-size: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 9999;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  }
+
+  #assistant-container {
+    position: fixed;
+    bottom: 90px;
+    right: 20px;
+    width: 360px;
+    height: 520px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 0 25px rgba(0,0,0,0.3);
+    display: none;
+    flex-direction: column;
+    z-index: 9999;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+  }
+
+  .chatbox {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .chat-header {
+    background: #007BFF;
+    color: white;
+    padding: 15px;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 18px;
+  }
+
+  .chat-messages {
+    flex: 1;
+    padding: 10px;
+    overflow-y: auto;
+    background: #e5e5e5;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .chat-input {
+    display: flex;
+    padding: 10px;
+    border-top: 1px solid #ddd;
+    background: #fff;
+  }
+
+  .chat-input input {
+    flex: 1;
+    padding: 10px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    outline: none;
+  }
+
+  .chat-input button {
+    background: #007BFF;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    margin-left: 5px;
+    border-radius: 20px;
+    cursor: pointer;
+  }
+
+  .question-btn {
+    display: inline-block;
+    padding: 8px 15px;
+    margin: 5px 5px 0 0;
+    border: none;
+    background: #f0f0f0;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+
+  .message {
+    max-width: 80%;
+    padding: 10px 15px;
+    border-radius: 20px;
+    line-height: 1.4;
+    font-size: 14px;
+    word-wrap: break-word;
+  }
+
+  .user {
+    align-self: flex-end;
+    background-color: #007BFF;
+    color: white;
+  }
+
+  .bot {
+    align-self: flex-start;
+    background-color: #f1f0f0;
+    color: #333;
+  }
+</style>
+<div id="assistant-button" onclick="openAssistant()">
+  💬
+</div>
+<div id="assistant-container">
+  <div class="chatbox">
+    <div class="chat-header">
+      Assistant SkyBoost
+      <span style="cursor:pointer; font-size: 20px;" onclick="closeAssistant()">✕</span>
+    </div>
+    <div class="chat-messages" id="chat"></div>
+    <div class="chat-input">
+      <input type="text" id="userInput" placeholder="Écris ta question...">
+      <button onclick="sendQuestion()">Envoyer</button>
+    </div>
+  </div>
+</div>
+<script>
+  const topics = {
+    "Services": [
+      "Boost Instagram",
+      "Boost TikTok",
+      "Boost YouTube",
+      "Boost pour entreprise"
+    ],
+    "Tarifs": [
+      "Combien coûte un boost Instagram ?",
+      "Faites-vous des promotions ?",
+      "Acceptez-vous MoMo ?"
+    ],
+    "Délais": [
+      "Quand commence le boost ?",
+      "Combien de temps ça dure ?",
+      "Est-ce instantané ?"
+    ],
+    "Paiement": [
+      "Quels sont les moyens de paiement ?",
+      "Puis-je payer par Mobile Money ?",
+      "Est-ce qu’on peut payer après le service ?"
+    ]
+  };
+
+  const responses = {
+    "Boost Instagram": "Nous offrons un boost Instagram à partir de 1000 FCFA, avec des résultats visibles en 1h.",
+    "Boost TikTok": "Boost TikTok disponible avec likes, vues ou abonnés, dès 500 FCFA.",
+    "Boost YouTube": "Nous proposons des vues réelles, abonnés et watchtime sur YouTube.",
+    "Boost pour entreprise": "Nous créons des campagnes digitales pour votre entreprise et gérons votre image sur les réseaux.",
+    "Combien coûte un boost Instagram ?": "Cela dépend de la quantité désirée. Exemple : 1000 vues = 1000 FCFA.",
+    "Faites-vous des promotions ?": "Oui, régulièrement. Suivez-nous pour ne rien manquer.",
+    "Acceptez-vous MoMo ?": "Oui, nous acceptons MTN, Moov et autres.",
+    "Quand commence le boost ?": "Le boost commence dans l'heure suivant la confirmation du paiement.",
+    "Combien de temps ça dure ?": "Cela dépend de la quantité. En général, c’est rapide.",
+    "Est-ce instantané ?": "Le processus est très rapide, souvent en quelques minutes.",
+    "Quels sont les moyens de paiement ?": "Mobile Money (MTN, Moov), transferts bancaires, et plus.",
+    "Puis-je payer par Mobile Money ?": "Oui, tout à fait.",
+    "Est-ce qu’on peut payer après le service ?": "Non, le paiement est requis avant le début du service."
+  };
+
+  function openAssistant() {
+    document.getElementById('assistant-container').style.display = 'flex';
+    showTopics();
+  }
+
+  function closeAssistant() {
+    document.getElementById('assistant-container').style.display = 'none';
+    document.getElementById('chat').innerHTML = '';
+  }
+
+  function showTopics() {
+    const chat = document.getElementById('chat');
+    chat.innerHTML = '';
+    addMessage('Bonjour ! Choisis un thème pour commencer :', 'bot');
+    Object.keys(topics).forEach(topic => {
+      const btn = document.createElement('button');
+      btn.className = 'question-btn';
+      btn.innerText = topic;
+      btn.onclick = () => showSubQuestions(topic);
+      chat.appendChild(btn);
+    });
+    const otherBtn = document.createElement('button');
+    otherBtn.className = 'question-btn';
+    otherBtn.innerText = "Autre question";
+    otherBtn.onclick = () => showCustomInput();
+    chat.appendChild(otherBtn);
+  }
+
+  function showSubQuestions(topic) {
+    addMessage(`Voici les questions sur "${topic}" :`, 'bot');
+    topics[topic].forEach(q => {
+      const btn = document.createElement('button');
+      btn.className = 'question-btn';
+      btn.innerText = q;
+      btn.onclick = () => askQuestion(q);
+      document.getElementById('chat').appendChild(btn);
+    });
+  }
+
+  function askQuestion(question) {
+    addMessage(question, 'user');
+    setTimeout(() => {
+      const answer = responses[question] || "Désolé, je n’ai pas encore la réponse à cette question.";
+      addMessage(answer, 'bot');
+    }, 500);
+  }
+
+  function sendQuestion() {
+    const input = document.getElementById('userInput');
+    const question = input.value.trim();
+    if (question) {
+      addMessage(question, 'user');
+      input.value = '';
+      sendToEmail(question);
+    }
+  }
+
+  function showCustomInput() {
+    addMessage("Pose ta question ci-dessous :", 'bot');
+  }
+
+  function addMessage(text, sender) {
+    const chat = document.getElementById('chat');
+    const msg = document.createElement('div');
+    msg.className = 'message ' + sender;
+    msg.innerText = text;
+    chat.appendChild(msg);
+    chat.scrollTop = chat.scrollHeight;
+  }
+
+  function sendToEmail(question) {
+    fetch('php/send-question.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        question
+      })
+    })
+    .then(() => {
+      addMessage("Merci ! Votre question a été transmise à notre équipe.", 'bot');
+    })
+    .catch(() => {
+      addMessage("Une erreur est survenue lors de l’envoi. Réessayez plus tard.", 'bot');
+    });
+  }
+</script>

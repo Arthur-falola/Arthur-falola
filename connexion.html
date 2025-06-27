@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <link rel="icon" type="image/png" href="favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="shortcut icon" href="favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+  <link rel="manifest" href="site.webmanifest" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Connexion</title>
+  <link rel="stylesheet" href="css/style1.css">
+  <style>
+    /* Petit style rapide pour l'erreur */
+    .error-message {
+      background-color: #ffe0e0;
+      color: #d10000;
+      border: 1px solid #d10000;
+      padding: 10px;
+      margin-bottom: 15px;
+      border-radius: 5px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div id="page-wrap">
+    <!--    <?php
+                                                                                                                                            session_start();
+                                                                                                                                                if (isset($_SESSION['login_error'])) {
+                                                                                                                                                        echo '<div class="error-message">' . $_SESSION['login_error'] . '</div>';
+                                                                                                                                                                unset($_SESSION['login_error']);
+                                                                                                                                                                    }
+                                                                                                                                                                        ?> -->
+
+
+    <header>
+      <h1>Connexion à votre compte SkyBoost</h1>
+
+    </header>
+    <p>
+      Connectez vous en un seul clic !
+    </p>
+    <form action="php/connexion.php" method="post">
+      <input type="email" name="email" id="email" placeholder="Entrez votre email" required>
+      <div>
+        <input style="width:80%;" type="password" name="password" id="password" placeholder="Entrez votre mot de passe" required>
+        <span id="togglePassword" class="eye-icon">👁️</span>
+      </div>
+      <button type="submit">Se connecter</button>
+    </form>
+
+    <p class="info">
+      Vous n'avez pas encore de compte ? <a href="inscription.html">Inscrivez-vous ici</a> pour commencer à booster vos réseaux sociaux !
+    </p>
+    <p class="info">
+      Si vous avez oublié votre mot de passe, <a href="mot_de_passe_oublie.php">cliquez ici</a> pour le récupérer.
+    </p>
+
+    <footer>
+      <p>
+        &copy; 2025 SkyBoost - Tous droits réservés.
+      </p>
+    </footer>
+
+    <script>
+      document.getElementById('togglePassword').addEventListener('click', function () {
+        const passwordField = document.getElementById('password');
+        const type = passwordField.getAttribute('type') === 'password' ? 'text': 'password';
+        passwordField.setAttribute('type', type);
+
+        // Change the icon based on the type
+        this.textContent = type === 'password' ? '👁️': '👁️‍🗨️';
+      });
+    </script>
+  </div>
+</body>
+</html>
